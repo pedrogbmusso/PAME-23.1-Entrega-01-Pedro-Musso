@@ -5,12 +5,12 @@ class Funcionario {
       this.#id = generateUniqueId();
       this.nome = nome;
       this.posicao = posicao;
-      this.#senha = Senha;
+      this.senha = Senha;
       this.consultas = [];
     }
 
     set  ModificarSenha(novaSenha){
-        this.#senha = novaSenha
+        this.senha = novaSenha
     }
 
     set ModificarNome(novoNome){
@@ -169,7 +169,8 @@ class Funcionario {
         console.clear();
         console.log("Lista de funcionario: ")
         for (let i = 0; this.funcionario.length > i; i++) {
-          console.log(this.funcionario[i]);
+          console.log(this.funcionario[i].nome);
+          console.log(this.funcionarios[i].posicao);
         }
         return
     }
@@ -183,7 +184,7 @@ class Funcionario {
           console.log("o cliente nao e fidelizado");
         }
         else{
-          console.log("ocliente nao e fidelizado");
+          console.log("o cliente nao e fidelizado");
         }
       }
       return
