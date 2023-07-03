@@ -32,11 +32,11 @@ class Funcionario {
       this.#id = generateUniqueId();
       this.nome = nomeCliente;
       this.numeroContato = numeroContato;
-      this.pets = [];
-      this.fidelizado = fidelizado;
+      this.pets = pets;
+      this.consultas = consultas;
     }
 
-    set fidelizado(){
+    //set fidelizado(){
       //set para o numero de consultas desse cliente, para saber se ele e fidelizado
       // if resultado do numero da busca >= 4 , entao cliente e fidelizado 
     }
@@ -48,25 +48,26 @@ class Funcionario {
       pet.nomeDono = this.nome;
     }*/
 
-  }
   
-
+  
   class Pet {
     constructor(nome, especie) {
       this.#id = generateUniqueId();
-      this.nome = nomepet;
+      this.nome = nome;
       this.especie = especie;
-      this.nomeDono = '';
+      this.nomeDono = nomedono;
     }
   }
 
   class Consulta {
-    constructor(nomepet, nomeCliente,nomeFuncionario, dataConsulta, status) {
+    constructor(nomepet, nomeCliente,nomeFuncionario, diaConsulta, mesConsulta, anoConsulta, status) {
       this.#id = generateUniqueId();
       this.nomepet = nomepet;
       this.nomeCliente = nomeCliente;
       this.nomeFuncionario = nomeFuncionario;
-      this.dataConsulta = dataConsulta;
+      this.diaConsulta = dataConsulta;
+      this.mesConsulta = mesConsulta;
+      this.anoConsulta = anoConsulta;
       this.status = status;
     }
   }
@@ -97,6 +98,23 @@ class Funcionario {
           "3 - Sair do Sistema"
       )
     }
+    listarDados(i){
+      console.log(this.funcionarios[i].verDados())
+      return
+    }
+
+    modificarDados(i){
+    console.clear();
+		console.log("Modificando seus dados...")
+    console.log("Digite o novo nome")
+		const nome = String(this.pegarInput());
+		console.log("Digite a nova Senha: ");
+		const senha = String(this.pegarInput());
+
+		this.funcionarios[i].modificarNome = nome;
+		this.funcionarios[i].modificarSenha = senha;
+      return
+    }
 
     NovoFuncionario() {
         //criar interacao no prompt para cadastro de funcionario
@@ -108,20 +126,42 @@ class Funcionario {
       console.log("digite a posicao do funcionario...");
       const posicao = string(this.pegarinput())
 
-      new Funcionario(nome, Senha, posicao);
-      this.Novofuncionariouncionario.push(funcionario);
-      return funcionario;
+      const novoFuncionario = new Funcionario(nome, Senha, posicao);
+      this.funcionario.push(novofuncionario);
+      return
     }
     
-    NovoCliente(nome, numeroContato) {
-      const Cliente = new Cliente(nome, numeroContato);
-      this.Cliente.push(Cliente);
-      return Cliente;
+    NovoCliente() {
+      console.log("Criando novo cliente...");
+      console.log("digite o nome do cliente:");
+      const nome = string(this.pegarinput());
+      console.log("digite o numero de contato:")
+      const nContato = string(this.pegarinput())
+
+      const novoCliente = new Cliente(nome,Ncontato);
+      this.Clientes.push(novoCliente);
+      return
     }
-    NovaConsulta(funcionario, nomepet, dataConsulta,) {
-        const appointment = new Consulta(nomepet, dataConsulta,);
-        funcionario.addAppointment(appointment);
-        return appointment;
+    NovaConsulta() {
+      console.log("Criando nova consulta...");
+      console.log("Digite o nome do Pet:");
+      const nomepet = string(this.pegarinput());
+      console.log("digite o nome do Cliente:");
+      const nomedono = string(this.pegarInput());
+      console.log("Digite o nome do funcionario:");
+      const nomefuncionario = string(this.pegarinput());
+      console.log("Digite o dia da Consulta:");
+      const DiaConsulta = string(this.pegarinput());
+      console.log("Digite o mes da Consulta");
+      const mesconsulta = string(this.pegarinput());
+      console.log("Digite o ano da consulta:");
+      const anoconsulta = string(this.pegarinput());
+      const estado = 'ativa'
+      const appointment = new Consulta(nomepet, nomedono,nomefuncionario, DiaConsulta,mesconsulta,anoconsulta, estado);
+      this.Consultas.push(appointment);
+      this.Clientes.consultas.push(appointment)
+      //adicionar consulta a funcionario
+      return appointment;
     
     }
   
@@ -131,14 +171,20 @@ class Funcionario {
         for (let i = 0; this.funcionario.length > i; i++) {
           console.log(this.funcionario[i]);
         }
-    return
+        return
     }
   
     MostrarClientes() {
       //mostrar para mostrar em ordem alfabetica
       console.log("Lista de Clientes:");
-      for (let i = 0; this.Cliente.length > i; i++) {
-        console.log(this.Cliente[i]);
+      for (let i = 0; this.Clientes.length > i; i++) {
+        console.log(this.Clientes[i]);
+        if(this.Clientes[i].consultas.length > 3){
+          console.log("o cliente nao e fidelizado");
+        }
+        else{
+          console.log("ocliente nao e fidelizado");
+        }
       }
       return
     }
@@ -147,9 +193,48 @@ class Funcionario {
       //ajeitar para mostrar em ordem alfabetica
       console.log("Lista de Pets:");
       for (let i = 0; this.Pets.length > i; i++) {
-        console.log(this.Pets[i].verDados);
+        console.log(this.Pets[i].nome);
+        console.log(this.Pets[i].nomeDono)
+    }
+    return
+  }
+
+  removerCliente(){
+    console.log("digite o nome do cliente:")
+    const nome = string(this.pegarinput());
+    for(let i = 0; this.Clientes.length > i; i++){
+      if(this.Clientes[i].nome == nome){
+        this.Pets = Pets.filter(this.Pets.nomeDono == this.Clientes[i].nome);
+        this.Clientes.splice(i);
+        }
+      }
+      return
+    } 
+
+  removerFuncionario(){
+    console.log("digite o nome do funcionario:")
+    const nome = string(this.pegarinput());
+    for(let i = 0; this.funcionarios.length > i; i++){
+      if(this.funcionarios[i].nome == nome){
+        if(this.funcionarios[i].consultas.length == 0){
+          this.funcionarios.splice(i);
+          console.log("O funcionario foi removido ");
+          return
+        }
+        else {
+            console.log("O funcionario nao pode ser removido por possuir consultas marcadas")
+            return
+        }
+      }
     }
   }
+
+  removerPet(){
+    console.log("digite o nome do Pet:");
+    const nome = string(this.pegarinput());
+    this.Pets = this.pets.filter(this.Pets.nome == nome);
+    return
+      }
 
     fazerLogin(){
     console.clear();
@@ -207,11 +292,36 @@ class Funcionario {
               this.modificarDados(indice);
               break;
             case "3":
-              this.mostrarFuncionarios(indice);
+              this.mostrarFuncionarios();
               break;
+            case "4":
+              this.MostrarClientes();
+            break;
+            case "5":
+              this.MostrarPets();
+            break;
+            case "6":
+              this.NovaConsulta();
+            break;
+            case "7":
+              this.mudarstatusConsulta();
+            break;
+            case "8":
+              this.removerCliente();
+            break;
+            case "9":
+              this.removerPet();
+            break;
+            case "10":
+              this.removerConsuta();
+            break;
+            case "11":
+              this.removerFuncionario();
+            break;
             case "12":
               ligado = false;
-              console.log("O sistema foi terminado.\n");
+              console.log("Voce deslogou.\n");
+              this.iniciar();
               break;
             default:
               continue;
